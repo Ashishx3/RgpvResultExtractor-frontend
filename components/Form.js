@@ -17,7 +17,7 @@ const Form = () => {
     setLoading(true);
     setSummaryHTML(""); // reset previous summary
     try {
-      const res = await fetch("http://localhost:5000/api/result", {
+      const res = await fetch("http://rgpv-result-extractor-backend/api/result", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
