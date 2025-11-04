@@ -1,13 +1,21 @@
+
+
+
+
 "use client";
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import * as XLSX from "xlsx";
+import * as XLSX from "xlsx"
+import ResultDisplay from "@/components/ResultDisplay";
+
+
 
 const Form = () => {
-  const [responseData, setResponseData] = useState({});
+  // const [responseData, setResponseData] = useState({});
   const [loading, setLoading] = useState(false);
   const [resultHTML, setResultHTML] = useState("");
-  const [summaryHTML, setSummaryHTML] = useState(""); // 🆕 for extracted table
+  const [summaryHTML, setSummaryHTML] = useState("");
+
 
 
 
@@ -29,7 +37,7 @@ const Form = () => {
       });
 
       const result = await res.json();
-      setResponseData(result);
+      // setResponseData(result);
       setResultHTML(result.resultHTML || "");
       const beautified = beautifyResultHTML(result.resultHTML || "");
 setResultHTML(beautified);
@@ -39,8 +47,7 @@ setResultHTML(beautified);
       console.error("Error submitting form:", error);
     } finally {
       setLoading(false);
-    }
-  };
+    }  };
 
  
   // 🆕 Extract Subject + Grade table (HORIZONTAL)
@@ -151,7 +158,6 @@ const beautifyResultHTML = (rawHTML) => {
 };
 
 
-
   const copyToExcel = () => {
     if (!resultHTML) return alert("⚠️ No result data found!");
 
@@ -252,17 +258,31 @@ const copyGradesOnly = () => {
               : "border-gray-300 focus:ring-green-400"
           }`}
         >
-          <option value="">Select Branch</option>
-          <option value="BTech">B.Tech</option>
-          <option value="BE">B.E.</option>
-          <option value="MCA">M.C.A.</option>
-          <option value="BPharmacy">B.Pharmacy</option>
-          <option value="BPharmacyPCI">B.Pharmacy (PCI)</option>
-          <option value="BArch">B.Arch.</option>
-          <option value="MPharmacy">M.Pharmacy</option>
-          <option value="ME">M.E.</option>
-          <option value="MTech">M.Tech.</option>
-          <option value="BEPTDC">B.E. (PTDC)</option>
+   <option value="">Select Branch</option>
+<option value="BE">B.E.</option>
+<option value="BTech">B.Tech.</option>
+<option value="MCA">M.C.A.</option>
+<option value="BPharmacy">B.Pharmacy</option>
+<option value="BPharmacyPCI">B.Pharmacy (PCI)</option>
+<option value="BArch">B.Arch.</option>
+<option value="MPharmacy">M.Pharmacy</option>
+<option value="ME">M.E.</option>
+<option value="MTech">M.Tech.</option>
+<option value="BEPTDC">B.E. (PTDC)</option>
+<option value="MTechPT">M.Tech. (PT)</option>
+<option value="MAM">MAM</option>
+<option value="MCADD">MCA (DD)</option>
+<option value="Diploma">Diploma</option>
+<option value="PhD">Ph.D.</option>
+<option value="PharmD">Pharm D.</option>
+<option value="MArch">M.Arch.</option>
+<option value="MCA2Year">M.C.A. (2 Year)</option>
+<option value="MBA">M.B.A.</option>
+<option value="BTechPTDC">B.Tech. (PTDC)</option>
+<option value="MPharmPCI">M.Pharm–PCI</option>
+<option value="BDesign">B.Design</option>
+<option value="MPlan">M.Plan</option>
+
         </select>
 
         {/* Select Semester */}
@@ -300,85 +320,12 @@ const copyGradesOnly = () => {
       </form>
 
       {/* Display Result */}
-      {resultHTML && (
-        
-        <div className="w-[95%] sm:w-[80%] mt-8 bg-white rounded-xl p-6 shadow-md">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold text-gray-800">🎓 RGPV Result</h2>
-            <div className="flex flex-wrap gap-3">
-  <button
-    onClick={copySummaryTable}
-    className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg shadow-md transition-all duration-300 hover:scale-105"
-  >
-    📋 Copy Summary
-  </button>
 
-  <button
-    onClick={copyGradesOnly}
-    className="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-lg shadow-md transition-all duration-300 hover:scale-105"
-  >
-    🧾 Copy Grades Only
-  </button>
-
-  <button
-    onClick={copyToExcel}
-    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-md transition-all duration-300 hover:scale-105"
-  >
-    📋 Copy Full Table
-  </button>
-
-  <button
-    onClick={downloadExcel}
-    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow-md transition-all duration-300 hover:scale-105"
-  >
-    ⬇ Download Excel
-  </button>
-</div>
-
-            {/* <div className="flex gap-3">
-              <button
-    onClick={copySummaryTable}
-    className="bg-emerald-600 text-white px-3 py-2 rounded hover:bg-emerald-700"
-  >
-    📋 Copy Summary
-  </button>
-              <button
-                onClick={copyToExcel}
-                className="bg-green-600 text-white px-3 py-2 rounded hover:bg-green-700"
-              >
-                📋 Copy to Excel
-              </button>
-              <button
-                onClick={downloadExcel}
-                className="bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700"
-              >
-                ⬇ Download Excel
-              </button>
-            </div> */}
-          </div>
-
-          {/* 🆕 Summary Table */}
-          {summaryHTML && (
-            <div
-              className="overflow-x-auto mb-6"
-              dangerouslySetInnerHTML={{ __html: summaryHTML }}
-            />
-          )}
-
-          {/* Full HTML Result */}
-          <div
-            className="overflow-x-auto text-sm"
-            dangerouslySetInnerHTML={{ __html: resultHTML }}
-          />
-        </div>
-      )}
+     
+     <ResultDisplay resultHTML={resultHTML} summaryHTML={summaryHTML} />
     </div>
   );
 };
 
 export default Form;
-
-
-
-
 
