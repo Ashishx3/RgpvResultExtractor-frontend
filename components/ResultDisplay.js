@@ -44,7 +44,7 @@ const ResultDisplay = ({ resultHTML, summaryHTML }) => {
     if (gradeCells.length === 0) return alert("⚠️ No grades found!");
     const gradeText = gradeCells.map((td) => td.innerText.trim()).join("\t");
     navigator.clipboard.writeText(gradeText);
-    alert("✅ Grades copied!");
+   
   };
 
   const downloadExcel = () => {

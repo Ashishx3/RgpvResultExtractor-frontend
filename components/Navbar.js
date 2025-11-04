@@ -23,7 +23,7 @@ const Navbar = () => {
           href="/"
           className="text-white text-2xl md:text-3xl font-bold tracking-wide hover:text-blue-400 transition duration-300"
         >
-          <span className="text-blue-400">Result</span>Exactrator
+          <span className="text-blue-400">Result</span>Sync
         </Link>
 
         {/* Desktop Links */}
